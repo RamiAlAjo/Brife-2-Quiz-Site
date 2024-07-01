@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+      }
+
+      .header {
+        width: 100%;
+        height: 200px;
+        background-image: url("markus-spiske-KWQ2kQtxiKE-unsplash 1 (1).png"); /* Replace with your image path */
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      .content {
+        width: 600px;
+        padding: 20px;
+        border: 2px solid #006400;
+        border-radius: 10px;
+        background-color: #fff;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      .question {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        border: 2px solid #006400;
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5%;
+      }
+
+      .option {
+        padding: 10px;
+        border: 2px solid #006400;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .option:hover {
+        background-color: #006400;
+        color: #fff;
+      }
+
+      .option input[type="radio"] {
+        display: none;
+      }
+
+      .option label {
+        display: block;
+        cursor: pointer;
+      }
+
+      .option input[type="radio"]:checked + label {
+        background-color: #006400;
+        color: #fff;
+      }
+
+      .option::before {
+        content: attr(data-label);
+        position: absolute;
+        top: -15px;
+        left: 90%;
+        background-color: #006400;
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 30px;
+      }
+
+      .timer {
+        font-size: 1.5em;
+        color: #006400;
+        text-align: center;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        border: 2px solid #006400;
+        padding: 20px;
+        border-radius: 50%;
+        background-color: #fff;
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1em;
+        margin-top: 20px;
+      }
+
+      .navigation span {
+        margin-right: 10px;
+      }
+
+      /* Media Queries for Responsiveness */
+      @media (max-width: 1400px) {
+        .content {
+          width: 70%;
+        }
+        .timer {
+          right: 10px;
+          top: 10px;
+          padding: 15px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .content {
+          width: 80%;
+        }
+        .timer {
+          right: 5px;
+          top: 5px;
+          padding: 10px;
+          font-size: 1.2em;
+        }
+        .option {
+          padding: 8px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          height: 150px;
+        }
+        .content {
+          width: 90%;
+          padding: 15px;
+        }
+        .question {
+          font-size: 1em;
+        }
+        .timer {
+          font-size: 1em;
+          padding: 10px;
+        }
+        .option {
+          padding: 5px;
+          font-size: 0.9em;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .content {
+          width: 95%;
+          padding: 10px;
+        }
+        .option {
+          padding: 5px;
+        }
+        .question {
+          font-size: 0.9em;
+        }
+        .timer {
+          font-size: 0.9em;
+          padding: 8px;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .header {
+          height: 100px;
+        }
+        .question {
+          font-size: 0.8em;
+        }
+        .timer {
+          font-size: 0.8em;
+          padding: 5px;
+        }
+        .option {
+          padding: 3px;
+          font-size: 0.8em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header"></div>
+    <div class="container">
+      <div class="content">
+        <div class="question">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+          commodo ligula eget dolor.
+        </div>
+        <div class="options">
+          <!-- Each option is now a radio button with a label -->
+          <div class="option" data-label="A">
+            <input type="radio" id="option1" name="option" value="A" />
+            <label for="option1">Lorem ipsum dolor sit amet</label>
+          </div>
+          <div class="option" data-label="B">
+            <input type="radio" id="option2" name="option" value="B" />
+            <label for="option2">Lorem ipsum dolor sit amet</label>
+          </div>
+          <div class="option" data-label="C">
+            <input type="radio" id="option3" name="option" value="C" />
+            <label for="option3">Lorem ipsum dolor sit amet</label>
+          </div>
+          <div class="option" data-label="D">
+            <input type="radio" id="option4" name="option" value="D" />
+            <label for="option4">Lorem ipsum dolor sit amet</label>
+          </div>
+        </div>
+        <div class="navigation">
+          <span>1/10</span>
+          <a href="#">Next page</a>
+        </div>
+      </div>
+      <div class="timer" id="timer">10:00</div>
+    </div>
+
+    <script>
+      // Timer
+      let timer = document.getElementById("timer");
+      let timeRemaining = 10 * 60; // 10 minutes in seconds
+
+      function startTimer() {
+        const interval = setInterval(() => {
+          if (timeRemaining <= 0) {
+            clearInterval(interval);
+            alert("Time's up!");
+          } else {
+            timeRemaining--;
+            let minutes = Math.floor(timeRemaining / 60);
+            let seconds = timeRemaining % 60;
+            timer.textContent = `${minutes}:${
+              seconds < 10 ? "0" : ""
+            }${seconds}`;
+          }
+        }, 1000);
+      }
+
+      startTimer();
+    </script>
+  </body>
+</html>
